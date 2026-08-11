@@ -2,6 +2,7 @@ package com.muhammad.studentapi.controller;
 import com.muhammad.studentapi.service.StudentService;
 
 import com.muhammad.studentapi.model.Student;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -17,32 +18,66 @@ public class StudentController {
         this.studentService = studentService;
     }
 
+    // ResponseEntity controls the HTTP response sent to the client
+    // 200 OK = request successful
+    // 404 Not Found = requested student does not exist
+    // 500 Internal Server Error = unexpected server/database error
+
     @GetMapping("/getstudent")
-    public List<Student> getStudent() {
-        return studentService.getStudent();
+    public ResponseEntity<List<Student>> getStudent() {
+        try {
+            return ResponseEntity.ok(studentService.getStudent()); // successful response (200 OK)
+        }
+        catch (Exception e){
+            return ResponseEntity.internalServerError().build(); // return 500 Internal Server Error
+        }
     }
+
     @PostMapping("/createstudent")
-    public Student createStudent(
+    public ResponseEntity<Student> createStudent(
             @RequestParam String name,
             @RequestParam int age,
             @RequestParam String major) {
 
-        return studentService.createStudent(name, age, major);
+        try {
+            return ResponseEntity.ok(studentService.createStudent(name, age, major));
+        }
+        catch (Exception e){
+            return ResponseEntity.internalServerError().build(); // return 500 Internal Server Error
+        }
     }
 
     @PutMapping("/updatestudent")
-    public boolean putStudent(
+    public ResponseEntity<Boolean> putStudent(
             @RequestParam int studentId,
             @RequestParam String courseId) {
 
-        return studentService.addCourse(studentId,courseId);
+        try {
+            boolean updated = studentService.addCourse(studentId, courseId);
+            if (updated) {
+                return ResponseEntity.ok(true);
+            }
+            return ResponseEntity.notFound().build();
+        }
+        catch (Exception e){
+            return ResponseEntity.internalServerError().build(); // return 500 Internal Server Error
+        }
     }
 
     @DeleteMapping("/deletestudent")
-    public boolean deleteStudent(
+    public ResponseEntity<Boolean> deleteStudent(
             @RequestParam int studentId){
 
-        return studentService.deleteStudent(studentId);
+        try {
+            boolean deleted = studentService.deleteStudent(studentId);
+            if(deleted) {
+                return ResponseEntity.ok(true);
+            }
+            return ResponseEntity.notFound().build();
+        }
+        catch (Exception e) {
+            return ResponseEntity.internalServerError().build(); // return 500 Internal Server Error
+        }
     }
 
 }

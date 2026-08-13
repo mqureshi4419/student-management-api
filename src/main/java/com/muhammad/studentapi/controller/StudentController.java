@@ -1,5 +1,6 @@
 package com.muhammad.studentapi.controller;
 import com.muhammad.studentapi.service.StudentService;
+import com.muhammad.studentapi.model.ApiError;
 
 import com.muhammad.studentapi.model.Student;
 import org.springframework.http.ResponseEntity;
@@ -24,17 +25,22 @@ public class StudentController {
     // 500 Internal Server Error = unexpected server/database error
 
     @GetMapping("/getstudent")
-    public ResponseEntity<List<Student>> getStudent() {
+    public ResponseEntity<?> getStudent() {
         try {
             return ResponseEntity.ok(studentService.getStudent()); // successful response (200 OK)
         }
         catch (Exception e){
-            return ResponseEntity.internalServerError().build(); // return 500 Internal Server Error
+            ApiError error = new ApiError(
+                    500,
+                    "Internal Server Error",
+                    "Database connection failed"
+            );
+            return ResponseEntity.internalServerError().body(error); // return 500 Internal Server Error
         }
     }
 
     @PostMapping("/createstudent")
-    public ResponseEntity<Student> createStudent(
+    public ResponseEntity<?> createStudent(
             @RequestParam String name,
             @RequestParam int age,
             @RequestParam String major) {
@@ -43,12 +49,17 @@ public class StudentController {
             return ResponseEntity.ok(studentService.createStudent(name, age, major));
         }
         catch (Exception e){
-            return ResponseEntity.internalServerError().build(); // return 500 Internal Server Error
+            ApiError error = new ApiError(
+                    500,
+                    "Internal Server Error",
+                    "Unable to create student due to a backend error"
+            );
+            return ResponseEntity.internalServerError().body(error); // return 500 Internal Server Error
         }
     }
 
     @PutMapping("/updatestudent")
-    public ResponseEntity<Boolean> putStudent(
+    public ResponseEntity<?> putStudent(
             @RequestParam int studentId,
             @RequestParam String courseId) {
 
@@ -57,15 +68,25 @@ public class StudentController {
             if (updated) {
                 return ResponseEntity.ok(true);
             }
-            return ResponseEntity.notFound().build();
+            ApiError error = new ApiError(
+                    404,
+                    "Not Found",
+                    "Student not found"
+            );
+            return ResponseEntity.status(404).body(error);
         }
         catch (Exception e){
-            return ResponseEntity.internalServerError().build(); // return 500 Internal Server Error
+            ApiError error = new ApiError(
+                    500,
+                    "Internal Server Error",
+                    "Unable to update student due to a backend error"
+            );
+            return ResponseEntity.internalServerError().body(error); // return 500 Internal Server Error
         }
     }
 
     @DeleteMapping("/deletestudent")
-    public ResponseEntity<Boolean> deleteStudent(
+    public ResponseEntity<?> deleteStudent(
             @RequestParam int studentId){
 
         try {
@@ -73,10 +94,20 @@ public class StudentController {
             if(deleted) {
                 return ResponseEntity.ok(true);
             }
-            return ResponseEntity.notFound().build();
+            ApiError error = new ApiError(
+                    404,
+                    "Not Found",
+                    "Student not found"
+            );
+            return ResponseEntity.status(404).body(error);
         }
         catch (Exception e) {
-            return ResponseEntity.internalServerError().build(); // return 500 Internal Server Error
+            ApiError error = new ApiError(
+                    500,
+                    "Internal Server Error",
+                    "Unable to delete student due to a backend error"
+            );
+            return ResponseEntity.internalServerError().body(error); // return 500 Internal Server Error
         }
     }
 

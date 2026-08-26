@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api")
 public class StudentController {
@@ -33,7 +34,7 @@ public class StudentController {
             ApiError error = new ApiError(
                     500,
                     "Internal Server Error",
-                    "Database connection failed"
+                    "Database connection failed!"
             );
             return ResponseEntity.internalServerError().body(error); // return 500 Internal Server Error
         }
@@ -52,7 +53,7 @@ public class StudentController {
             ApiError error = new ApiError(
                     500,
                     "Internal Server Error",
-                    "Unable to create student due to a backend error"
+                    "Unable to create student due to a backend error!"
             );
             return ResponseEntity.internalServerError().body(error); // return 500 Internal Server Error
         }
@@ -79,7 +80,7 @@ public class StudentController {
             ApiError error = new ApiError(
                     500,
                     "Internal Server Error",
-                    "Unable to update student due to a backend error"
+                    "Unable to update student due to a backend error!"
             );
             return ResponseEntity.internalServerError().body(error); // return 500 Internal Server Error
         }
@@ -105,7 +106,7 @@ public class StudentController {
             ApiError error = new ApiError(
                     500,
                     "Internal Server Error",
-                    "Unable to delete student due to a backend error"
+                    "Unable to delete student due to a backend error!"
             );
             return ResponseEntity.internalServerError().body(error); // return 500 Internal Server Error
         }

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Management System</title>
+</head>
+<body>
+
+    <h1>Student Management System</h1>
+    <h2>Create Student</h2>
+
+    <form id="studentForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name">
+
+        <br><br>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age">
+
+        <br><br>
+
+        <label for="major">Major:</label>
+        <input type="text" id="major">
+
+        <br><br>
+
+        <button type="submit">Create Student</button>
+
+        <br>
+
+        <p id="successMessage"></p>
+
+        <br>
+
+        <label>Student Result:</label>
+        <pre id="studentResult"></pre>
+
+    </form>
+
+    <h2>All Students</h2>
+    <button type="button" id="loadStudentsButton">Load Students</button>
+    <div id="studentsList"></div>
+
+<script src="script.js"></script>
+</body>
+</html>

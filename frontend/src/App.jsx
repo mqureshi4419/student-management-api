@@ -9,6 +9,8 @@ const [major, setMajor] =useState("")
 const [message, setMessage] = useState("")
 const [createdStudent, setCreatedStudent] = useState(null)
 const [students, setStudents] = useState([])
+const [editingStudent, setEditingStudent] = useState(null)
+
 
 function createStudent() {
 
@@ -93,6 +95,36 @@ function deleteStudent(id) {
 
 }
 
+function updateStudent(id) {
+    const url = "http://localhost:8080/api/updatestudent?studentId=" + id + "&name=" + name + "&age=" + age + "&major=" + major;
+
+    fetch(url, {
+    method: "PUT"
+    }).then(function(response) {
+        if (!response.ok) {
+            return response.json().then(function(errorData) {
+                throw new Error(errorData.message)
+            })
+        }
+
+        return response.json();
+    }).then(function(updatedStudent) {
+        setStudents(
+            students.map(function(student) {
+                return student.id === updatedStudent.id ? updatedStudent : student
+            })
+        )
+        setEditingStudent(null)
+        setName("")
+        setAge("")
+        setMajor("")
+        setMessage("Student updated successfully.")
+    })
+
+}
+
+
+
 
 
 
@@ -122,9 +154,23 @@ function deleteStudent(id) {
     </div>
 
     <div className="mb-4">
-        <button onClick={createStudent}
-        className="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition">Create Student
+        <button onClick={() => editingStudent ? updateStudent(editingStudent.id) : createStudent()}
+        className="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition">
+        {editingStudent ? "Update Student" : "Create Student"}
         </button>
+    </div>
+
+    <div className="mb-4">
+        {editingStudent && (
+        <button onClick={() =>{
+            setEditingStudent(null)
+            setName("")
+            setAge("")
+            setMajor("")
+        }}
+        className="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition">
+        Cancel Edit</button>
+        )}
     </div>
 
     <p className="mb-4">{message}</p>
@@ -154,7 +200,14 @@ function deleteStudent(id) {
                     <td className="px-4 py-2 border-b">{student.name}</td>
                     <td className="px-4 py-2 border-b">{student.age}</td>
                     <td className="px-4 py-2 border-b">{student.major}</td>
-                    <td className="px-4 py-2 border-b">Edit <button className="hover:text-red-600"  onClick={() => deleteStudent(student.id)}>Delete</button></td>
+                    <td className="px-4 py-2 border-b">
+                    <button className="hover:text-blue-600" onClick={() => {
+                        setEditingStudent(student)
+                        setName(student.name)
+                        setAge(student.age)
+                        setMajor(student.major)}}
+                        >Edit</button>
+                    <button className="hover:text-red-600"  onClick={() => deleteStudent(student.id)}>Delete</button></td>
                   </tr>
                 )
               })}

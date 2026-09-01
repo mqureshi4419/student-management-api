@@ -95,6 +95,23 @@ public class StudentService {
 
     }
 
+    public Student updateStudentDetails(int studentId, String name, int age, String major) {
+
+        Optional<Student> studentOptional = studentRepository.findStudentById(studentId);
+
+        if (studentOptional.isPresent()) {
+            Student student = studentOptional.get();
+
+            student.setName(name);
+            student.setAge(age);
+            student.setMajor(major);
+
+            return  studentRepository.save(student);
+        }
+
+        return null;
+    }
+
     public boolean deleteStudent(int studentId) {
         try {
             logger.info("Deleting student: {}", studentId);

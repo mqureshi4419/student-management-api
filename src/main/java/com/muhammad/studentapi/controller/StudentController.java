@@ -59,7 +59,7 @@ public class StudentController {
         }
     }
 
-    @PutMapping("/updatestudent")
+    @PutMapping("/addcourse")
     public ResponseEntity<?> putStudent(
             @RequestParam int studentId,
             @RequestParam String courseId) {
@@ -84,6 +84,29 @@ public class StudentController {
             );
             return ResponseEntity.internalServerError().body(error); // return 500 Internal Server Error
         }
+    }
+
+    @PutMapping("/updatestudent")
+    public ResponseEntity<?> updateStudent(
+            @RequestParam int studentId,
+            @RequestParam String name,
+            @RequestParam int age,
+            @RequestParam String major) {
+
+        Student updatedStudent =
+                studentService.updateStudentDetails(studentId, name, age, major);
+
+        if (updatedStudent != null) {
+            return ResponseEntity.ok(updatedStudent);
+        }
+
+        ApiError error = new ApiError(
+                404,
+                "Not Found",
+                "Student not found"
+        );
+
+        return  ResponseEntity.status(404).body(error);
     }
 
     @DeleteMapping("/deletestudent")

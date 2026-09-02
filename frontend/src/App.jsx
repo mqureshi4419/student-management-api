@@ -1,5 +1,10 @@
 import { useState } from 'react'
 import './App.css'
+import { Routes, Route } from 'react-router-dom'
+import Home from './pages/Home'
+import Login from './pages/Login'
+import Dashboard from './pages/Dashboard'
+import CreateStudent from './pages/CreateStudent'
 
 function App() {
 
@@ -130,6 +135,15 @@ function updateStudent(id) {
 
 
     return (
+        <Routes>
+
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/Dashboard" element={<Dashboard />} />
+            <Route path="/students/create" element={<CreateStudent />} />
+
+            <Route path="/students" element= {
+
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
         <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
     <h1 className="text-4xl font-bold text-blue-600 mb-4">Student Management System</h1>
@@ -201,13 +215,20 @@ function updateStudent(id) {
                     <td className="px-4 py-2 border-b">{student.age}</td>
                     <td className="px-4 py-2 border-b">{student.major}</td>
                     <td className="px-4 py-2 border-b">
-                    <button className="hover:text-blue-600" onClick={() => {
+                    <button className="text-blue-600 font-medium mr-3 hover:underline" onClick={() => {
                         setEditingStudent(student)
                         setName(student.name)
                         setAge(student.age)
                         setMajor(student.major)}}
                         >Edit</button>
-                    <button className="hover:text-red-600"  onClick={() => deleteStudent(student.id)}>Delete</button></td>
+                    <button className="text-red-600 font-medium hover:underline"  onClick={() => {
+                    const confirmed = confirm("Are you sure you want to delete this student?")
+
+                    if (confirmed) {
+                    deleteStudent(student.id)}
+
+                    }}
+                    >Delete</button></td>
                   </tr>
                 )
               })}
@@ -218,6 +239,8 @@ function updateStudent(id) {
     </div>
     </div>
 
+    } />
+    </Routes>
 
     )
 

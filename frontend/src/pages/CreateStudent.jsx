@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Navbar from '../components/Navbar'
 
 function CreateStudent() {
 
@@ -45,6 +46,10 @@ if (age <= 1 || age >= 80) {
 
     return (
 
+    <div className="bg-gray-100">
+
+    <Navbar />
+
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
         <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
                 <h1 className="text-4xl font-bold text-blue-600 mb-4">Northfield Academy</h1>
@@ -79,6 +84,8 @@ if (age <= 1 || age >= 80) {
             {createdStudent && (
                 <pre>{JSON.stringify(createdStudent, null, 2)}</pre>
             )}
+
+            </div>
 
             </div>
 

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Navbar from '../components/Navbar'
 
 function Students() {
 
@@ -90,8 +91,11 @@ function updateStudent(id) {
 
     return (
 
+    <div className="bg-gray-100">
+    <Navbar />
+
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-            <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
+            <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-4xl">
         <h1 className="text-4xl font-bold text-blue-600 mb-4">Northfield Academy</h1>
         <h2 className="text-xl font-semibold text-gray-700 mb-6">Student Profile</h2>
 
@@ -183,6 +187,8 @@ function updateStudent(id) {
             </table>
 
             </div>
+
+        </div>
 
     </div>
 

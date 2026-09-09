@@ -1,8 +1,14 @@
+import Navbar from '../components/Navbar'
+
 function Login() {
     return (
-        <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-            <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
-            <h1 className="text-4xl font-bold text-blue-600 mb-4">Northfield Academy Portal</h1>
+
+    <div className="bg-gray-100">
+    <Navbar />
+
+        <div className="min-h-screen bg-gray-100 flex items-center justify-center px-6">
+            <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md border border-gray-200">
+            <h1 className="text-4xl font-bold text-blue-600 mb-6">Northfield Academy Portal</h1>
 
             <div className="mb-4">
             <label className="block font-medium text-gray-700">Email </label>
@@ -22,6 +28,8 @@ function Login() {
 
             </div>
         </div>
+
+    </div>
     )
 
 }

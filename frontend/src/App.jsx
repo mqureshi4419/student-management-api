@@ -5,6 +5,7 @@ import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import CreateStudent from './pages/CreateStudent'
 import Students from './pages/Students'
+import Contact from './pages/Contact'
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/students/create" element={<CreateStudent />} />
             <Route path="/students" element={<Students />} />
+            <Route path="/contact" element={<Contact />} />
         </Routes>
     )
 

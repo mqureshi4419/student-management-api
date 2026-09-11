@@ -1,19 +1,7 @@
 import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
-import { useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
 
 function Dashboard() {
-
-const navigate = useNavigate()
-
-useEffect(() => {
-    const user = localStorage.getItem("user")
-
-    if (!user) {
-        navigate('/login')
-    }
-}, [])
 
     return (
 

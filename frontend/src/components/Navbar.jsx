@@ -24,9 +24,14 @@ function logoutUser() {
 {/*             Portal Login</Link> */}
 
              {user ? (
+             <>
+                <Link to='/dashboard'
+                className="border border-blue-600 text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-blue-50 transition">
+                Dashboard</Link>
                 <button onClick={logoutUser}
                 className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition">
                 Logout</button>
+             </>
              ) : (
                 <Link to='/login'
                 className="border border-blue-600 text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-blue-50 transition">

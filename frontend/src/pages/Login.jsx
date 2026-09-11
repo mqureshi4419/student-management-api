@@ -26,6 +26,7 @@ function loginUser() {
 
     }).then(function(user) {
            console.log(user);
+           localStorage.setItem("user", JSON.stringify(user))
            navigate('/dashboard')
 
     }).catch(function(error){

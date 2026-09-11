@@ -1,8 +1,19 @@
 import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
+import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 
 function Dashboard() {
 
+const navigate = useNavigate()
+
+useEffect(() => {
+    const user = localStorage.getItem("user")
+
+    if (!user) {
+        navigate('/login')
+    }
+}, [])
 
     return (
 
@@ -19,9 +30,6 @@ function Dashboard() {
             <Link to='/students' className="bg-white text-blue-600 border border-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition">View Student</Link>
             </div>
 
-            <div className="flex justify-center">
-            <button className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition">Logout</button>
-            </div>
         </div>
         </div>
 

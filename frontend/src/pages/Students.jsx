@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Navbar from '../components/Navbar'
 
 function Students() {
@@ -10,7 +10,7 @@ const [message, setMessage] = useState("")
 const [students, setStudents] = useState([])
 const [editingStudent, setEditingStudent] = useState(null)
 
-
+// Loads all students from the backend when the page opens or when refreshed
 function loadStudents() {
 
     const url = "http://localhost:8080/api/getstudent";
@@ -27,14 +27,19 @@ function loadStudents() {
         return response.json();
 
     }).then(function(students) {
-        console.log(students);
-        setMessage("Students loaded successfully.");
         setStudents(students);
+    }).catch(function(error) {
+        setMessage(error.message)
     })
-
 
 }
 
+// Runs once when the Students page first loads
+useEffect(() => {
+    loadStudents()
+}, [])
+
+// Deletes a student by id and removes them from the table
 function deleteStudent(id) {
     const url = "http://localhost:8080/api/deletestudent?studentId= " + id;
 
@@ -55,10 +60,13 @@ function deleteStudent(id) {
                 return student.id !== id
             })
             )
+    }).catch(function(error) {
+              setMessage(error.message)
     })
 
 }
 
+// Sends updated student information to the backend
 function updateStudent(id) {
     const url = "http://localhost:8080/api/updatestudent?studentId=" + id + "&name=" + name + "&age=" + age + "&major=" + major;
 
@@ -78,11 +86,14 @@ function updateStudent(id) {
                 return student.id === updatedStudent.id ? updatedStudent : student
             })
         )
+        // Clears edit mode and resets the form after a successful update
         setEditingStudent(null)
         setName("")
         setAge("")
         setMajor("")
         setMessage("Student updated successfully.")
+    }).catch(function(error) {
+              setMessage(error.message)
     })
 
 }
@@ -144,7 +155,7 @@ function updateStudent(id) {
 
         <div className="mb-4">
                 <button onClick={loadStudents}
-                className="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition">Load Students</button>
+                className="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition">Refresh Students</button>
         </div>
 
         <table className="w-full border-collapse">
@@ -165,6 +176,8 @@ function updateStudent(id) {
                             <td className="px-4 py-2 border-b">{student.age}</td>
                             <td className="px-4 py-2 border-b">{student.major}</td>
                             <td className="px-4 py-2 border-b">
+
+                            {/* Loads the selected student's data into the form for editing */}
                             <button className="text-blue-600 font-medium mr-3 hover:underline" onClick={() => {
                                 setEditingStudent(student)
                                 setName(student.name)

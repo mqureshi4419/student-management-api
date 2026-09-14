@@ -9,8 +9,9 @@ function CreateStudent() {
     const [message, setMessage] = useState("")
     const [createdStudent, setCreatedStudent] = useState(null)
 
-    function createStudent() {
-
+// Validates the form and sends a new student to the backend
+function createStudent() {
+setMessage("")
 if (!name || !age || !major) {
     setMessage("Please fill in all fields.")
     return
@@ -41,6 +42,8 @@ if (age <= 1 || age >= 80) {
         setName("")
         setAge("")
         setMajor("")
+    }).catch(function(error) {
+          setMessage(error.message)
     })
 }
 
@@ -81,8 +84,14 @@ if (age <= 1 || age >= 80) {
         </div>
 
         <p className="mb-4">{message}</p>
+        {/* Shows a confirmation card with the newly created student's information */}
             {createdStudent && (
-                <pre>{JSON.stringify(createdStudent, null, 2)}</pre>
+                <div className="mt-4 border border-gray-200 rounded-lg p-4 bg-gray-50">
+                    <h3 className="font-semibold text-lg mb-2">Student Created</h3>
+                    <p><strong>Name:</strong> {createdStudent.name}</p>
+                    <p><strong>Age:</strong> {createdStudent.age}</p>
+                    <p><strong>Major:</strong> {createdStudent.major}</p>
+                </div>
             )}
 
             </div>

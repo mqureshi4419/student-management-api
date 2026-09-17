@@ -49,4 +49,16 @@ public class UserControllerTest {
                 .andExpect(status().isOk());
     }
 
+    @Test
+    void loginReturnsUnauthorizedWhenCredentialsAreWrong() throws Exception {
+
+        when(userService.login("admin@northfield.com", "wrong123"))
+                .thenReturn(Optional.empty());
+
+        mockMvc.perform(post("/api/login")
+                        .param("email", "admin@northfield.com")
+                        .param("password", "wrong123"))
+                .andExpect(status().isUnauthorized());
+    }
+
 }

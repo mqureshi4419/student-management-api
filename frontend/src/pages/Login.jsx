@@ -25,7 +25,6 @@ function loginUser() {
         return response.json();
 
     }).then(function(user) {
-           console.log(user);
            localStorage.setItem("user", JSON.stringify(user))
            navigate('/dashboard')
 
